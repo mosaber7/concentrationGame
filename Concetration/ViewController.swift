@@ -21,7 +21,9 @@ class ViewController: UIViewController {
     
    lazy var game = Concetration(numberOFPairsOfCards: self.cardButtons.count / 2)
     
-    var emojiChoices = ["MO","Saber", "Gamed", "Yaman" ]
+    var emojiChoices = ["🔥","👻"]
+    var emoji = [Int: String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -39,7 +41,8 @@ class ViewController: UIViewController {
             let button = cardButtons[index]
             let card = game.cards[index]
             if card.isFaceUP{
-                button.setTitle(emojiChoices[index], for: .normal)
+                print("here")
+                button.setTitle(emoji(for: card), for: .normal)
                 button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             }else{
                 button.setTitle("", for: .normal)
@@ -47,14 +50,16 @@ class ViewController: UIViewController {
             }
         }
     }
-    func flibCard(withEmoji emoji: String, on buton: UIButton){
-        if buton.currentTitle == emoji{
-           
-        }else{
-           
+    func emoji(for card: Card)-> String{
+        if emoji[card.idenifier] == nil, emojiChoices.count > 0{
+            let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
+            emoji[card.idenifier] = emojiChoices.remove(at: randomIndex)
         }
         
+        return emoji[card.idenifier] ?? "?"
+        
     }
+    
     
 
 }

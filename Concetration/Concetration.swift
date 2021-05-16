@@ -13,19 +13,8 @@ class Concetration {
     
     private  var indexOfOneAndOnlyFaceUPCard: Int?{
         get{
-            var foundIndex: Int?
+            return cards.indices.filter{cards[$0].isFaceUP}.oneAndOnly
             
-            for indedx in cards.indices{
-                if cards[indedx].isFaceUP{
-                    if foundIndex == nil{
-                        foundIndex = indedx
-                        
-                    }else{
-                        return nil
-                    }
-                }
-            }
-            return foundIndex
         }
         set{
             for index in cards.indices{
@@ -62,4 +51,10 @@ class Concetration {
         cards = cards.shuffled()
     }
     
+}
+
+extension Collection{
+    var oneAndOnly: Element?{
+        count == 1 ? first : nil
+    }
 }

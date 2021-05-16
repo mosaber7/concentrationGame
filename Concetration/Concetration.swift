@@ -9,9 +9,30 @@ import Foundation
 
 
 class Concetration {
-    var cards = [Card]()
+   private(set) var cards = [Card]()
     
-    var indexOfOneAndOnlyFaceUPCard: Int?
+    private  var indexOfOneAndOnlyFaceUPCard: Int?{
+        get{
+            var foundIndex: Int?
+            
+            for indedx in cards.indices{
+                if cards[indedx].isFaceUP{
+                    if foundIndex == nil{
+                        foundIndex = indedx
+                        
+                    }else{
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set{
+            for index in cards.indices{
+                cards[index].isFaceUP = (index == newValue)
+            }
+        }
+    }
     
     func chooseCard(at index: Int){
         
@@ -27,13 +48,10 @@ class Concetration {
                 
             }
             
-        }else{
-            for index in cards.indices{
-                cards[index].isFaceUP = false
+            else{
+                
+                indexOfOneAndOnlyFaceUPCard = index
             }
-            cards[index].isFaceUP = true
-            indexOfOneAndOnlyFaceUPCard = index
-            
         }
     }
     init(numberOFPairsOfCards: Int) {

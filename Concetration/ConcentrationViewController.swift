@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     
     var flibCount = 0{
@@ -25,7 +25,14 @@ class ViewController: UIViewController {
         return self.cardButtons.count / 2
     }
     
-    private var emojiChoices = ["🔥","👻", "😁", "👈🏻", "🥸", "👺"]
+    var theme: String? {
+        didSet{
+            emojiChoices = theme ?? ""
+            emoji = [:]
+            updateViewFromModel()
+        }
+    }
+    private var emojiChoices = "🔥👻😁👈🏻🥸👺"
     private var emoji = [Int: String]()
     
     override func viewDidLoad() {
@@ -41,11 +48,11 @@ class ViewController: UIViewController {
         
     }
     func updateViewFromModel(){
+        if cardButtons != nil{
         for index in cardButtons.indices{
             let button = cardButtons[index]
             let card = game.cards[index]
             if card.isFaceUP{
-                print("here")
                 button.setTitle(emoji(for: card), for: .normal)
                 button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             }else{
@@ -53,10 +60,13 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1)
             }
         }
+            
+        }
     }
    private  func emoji(for card: Card)-> String{
         if emoji[card.idenifier] == nil, emojiChoices.count > 0{
-            emoji[card.idenifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+            let randomEmojiIndex = emojiChoices.index(emojiChoices.startIndex, offsetBy: emojiChoices.count.arc4random)
+            emoji[card.idenifier] = String(emojiChoices.remove(at: randomEmojiIndex))
         }
         
         return emoji[card.idenifier] ?? "?"

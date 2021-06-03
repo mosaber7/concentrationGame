@@ -8,7 +8,7 @@
 import Foundation
 
 
-class Concetration {
+struct  Concetration {
    private(set) var cards = [Card]()
     
     private  var indexOfOneAndOnlyFaceUPCard: Int?{
@@ -23,7 +23,7 @@ class Concetration {
         }
     }
     
-    func chooseCard(at index: Int){
+   mutating func chooseCard(at index: Int){
         
         if !cards[index].isMatched {
             if let matchedIndex = indexOfOneAndOnlyFaceUPCard, matchedIndex != index{
@@ -40,6 +40,8 @@ class Concetration {
             else{
                 
                 indexOfOneAndOnlyFaceUPCard = index
+
+                
             }
         }
     }

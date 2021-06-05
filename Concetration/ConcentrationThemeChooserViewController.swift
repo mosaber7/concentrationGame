@@ -7,11 +7,16 @@
 
 import UIKit
 
-class ConcentrationThemeChooserViewController: UIViewController {
+class ConcentrationThemeChooserViewController: UIViewController, UISplitViewControllerDelegate {
+    
     
     var themes = ["Sports": "⚽️🏀🏈⚽️🏀🏈",
                   "Animals": "🐱🐕‍🦺🦊🐱🐕‍🦺🦊",
                   "Faces": "🔥👻😁👈🏻🥸👺"]
+    override class func awakeFromNib() {
+        splitViewController?.delegate = self
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
